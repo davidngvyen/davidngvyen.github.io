@@ -1,0 +1,217 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}   
+
+body{
+    background-color:rgb(252, 246, 230);
+    color:rgb(42, 141, 92);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 5%; /* Adjust padding to reduce space */
+}
+
+
+nav {
+    display: flex;  /* Uses Flexbox to align child elements in a row */
+    align-items: center;  /* Vertically centers the nav items along the cross-axis (y-axis) */
+    justify-content: space-between;  /* Distributes items in the nav with space between them, pushing them to the left and right edges */
+    flex-wrap: wrap;  /* Allows the nav items to wrap to the next line if the container becomes too narrow */
+}
+
+.logo{
+    width: 200px;  /* Sets a fixed width for the logo */
+    font-size: 25px;  /* Sets the font size for the logo text */
+    color:rgb(203,41,57);
+    visibility: hidden;
+    animation: moveLogo 4s forwards;
+    z-index: 10;
+}
+
+nav ul li{
+    display: inline-block;  /* Aligns the list items (`li`) horizontally, side by side */
+    list-style: none;  /* Removes the default bullet points from the list items */
+    margin: 10px 20px; /* Adds 10px of vertical margin and 20px of horizontal margin around each list item */
+}
+
+nav ul li a{
+    color: rgb(42, 141, 92);  /* Sets the text color of the anchor (`a`) tags to a dark greenish-blue */
+    text-decoration: none;  /* Removes the underline from the links */
+    font-size: 25px;  /* Sets the font size for the links */
+    position: relative; 
+     /* Makes the anchor tag the reference point for the pseudo-element (::after) */
+}
+
+nav ul li a::after{
+    content: '';  /* Creates an empty content box below the link to have ::after*/
+    width: 0;  /* Sets the initial width of the hover effect (a line) to 0, so it's hidden initially */
+    height: 3px;  /* Sets the height of the hover effect (the underline) */
+    background: rgb(212, 150, 98);  /* Sets the color of the underline to a brownish color */
+    position: absolute;  /* Positions the underline relative to the anchor tag */
+    left: 0;  /* Aligns the left edge of the underline with the left edge of the link */
+    bottom: -6px;  /* Places the underline 6px below the text */
+    transition: 0.5s;  /* Adds a transition effect that takes 0.5 seconds when the width of the underline changes */
+}
+
+nav ul li a:hover::after{
+    width: 100%;  /* Expands the underline to the full width of the link when hovered over */
+}
+
+.item{
+    font-size: 20px;
+    width: 750px;
+    transform: translate(15%,25%);
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3); /* x-offset, y-offset, blur-radius, color */
+    border-radius: 25px;
+    background-color: rgb(255, 247, 229);
+    padding: 25px;
+    visibility: hidden; /* Hidden at the start */
+    animation: moveText 4s forwards;
+}
+
+.profile {
+    height: 500px;
+    width: 500px;
+    position: relative; /* So that front and back are positioned relative to the container */
+    box-sizing: border-box; /* Ensures the border is included in the element's size */
+    transition: transform 0.6s ease; /* Smooth transition for the transform */
+    perspective: 1000px; /* Adds perspective to allow the 3D flip effect */
+    transform: translate(230%, -80%);
+    visibility: visible;
+    animation: moveall 5s forwards; /* Apply forwards to retain the last keyframe state */
+    pointer-events: none;
+    z-index: 101;
+
+}
+.profile.animation-complete{
+    pointer-events: auto;
+}
+/* Flip effect */
+.profile.animation-complete:hover .front {
+    transform: rotateY(180deg); /* Flip the front */
+}
+
+.profile.animation-complete:hover .back {
+    transform: rotateY(0deg); /* Make the back visible */
+}
+.front, .back {
+    position: absolute; /* Stack front and back on top of each other */
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    backface-visibility: hidden; /* Prevents the back side from showing when not flipped */
+    transition: transform 0.6s ease;
+    border-radius: 500px;
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+.front {
+    z-index: 2; /* Ensure the front side is visible by default */
+}
+
+.back {
+    background-color: gray; /* Black background for the back */
+    color: white; /* Optional: If there's text on the back */
+    transform: rotateY(180deg); /* Initially rotate the back so it's hidden */
+}
+
+.profile:hover .front {
+    transform: rotateY(180deg); /* Flip the front */
+}
+
+.profile:hover .back {
+    transform: rotateY(0deg); /* Flip the back to become visible (from rotateY(180deg) to 0deg) */
+}
+
+.profile_pic {
+    height: 100%;  /* Set the image to fill the parent container */
+    width: 100%;
+    border-radius: 1000px;
+    object-fit: cover; /* Ensures the image scales properly without distortion */
+}
+
+.instaPic,.spotPic,.linkPic,.gitPic,.youPic{
+    height: 100px;
+    width: 100px;
+    border-radius: 100px;
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+
+@keyframes moveall{
+    0%{height:850px; width: 850px;transform: translate(60%,-70%); animation-delay: 1s;}
+    70%{visibility: hidden;}
+    100%{transform: translate(230%, -80%);visibility: visible;}
+}
+
+@keyframes moveText{
+    0%{transform: translate(80%, 20%); visibility: hidden;}
+    12%{visibility: hidden;}
+    100%{visibility: visible;}
+}
+
+@keyframes moveLogo{
+    0%{transform: translate(500%, 1500%); visibility: hidden;}
+    12%{visibility: hidden;}
+    100%{visibility: visible;}
+}
+@keyframes navMove{
+    0%{transform: translate(-550%,1350%);}
+}
+
+ul li{
+  animation: navMove 4s;
+}
+.instaPic {
+    transform: translate(50px, 350px); /* Moves right and up */
+    position: absolute;
+    transition: transform 0.3s ease; /* Smooth transition for scaling */
+    transform-origin: center; /* Keep scaling centered */
+}
+.spotPic {
+    transform: translate(100px, 60px); /* Moves right and down */
+    position: absolute;
+    transition: transform 0.3s ease;
+    transform-origin: center;
+}
+.linkPic {
+    transform: translate(100px, 200px); /* Moves right and down */
+    position: absolute;
+    transition: transform 0.3s ease;
+    transform-origin: center;
+}
+.gitPic {
+    transform: translate(200px, 300px); /* Moves far right and down */
+    position: absolute;
+    transition: transform 0.3s ease;
+    transform-origin: center;
+}
+.youPic{
+    transform: translate(10px,0px);
+    position: absolute;
+    transition: transform 0.3s ease;
+    transform-origin: center;
+}
+
+/* Hover effect */
+.instaPic:hover, .spotPic:hover, .linkPic:hover, .gitPic:hover, .youPic:hover {
+    transform: translate(50px, 350px) scale(1.1); /* Keep original position, only scale */
+}
+.spotPic:hover {
+    transform: translate(100px, 60px) scale(1.1);
+}
+.linkPic:hover {
+    transform: translate(100px, 200px) scale(1.1);
+}
+.gitPic:hover {
+    transform: translate(200px, 300px) scale(1.1);
+}
+.youPic:hover{
+    transform: translate(10px,0px) scale(1.1);
+}
